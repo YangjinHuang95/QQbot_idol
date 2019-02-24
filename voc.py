@@ -1,7 +1,8 @@
 import jieba
-from values import PAD_token,SOS_token,EOS_token
+from values import PAD_token, SOS_token, EOS_token
 
 jieba.load_userdict("extra_dict.txt")
+
 
 class Voc:
     def __init__(self, name):

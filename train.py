@@ -92,7 +92,7 @@ def trainIters(model_name, voc, pairs, encoder, decoder,
 
     try:
         directory = os.path.join(save_dir, model_name, corpus_name,
-                                     '{}-{}_{}'.format(encoder_n_layers, decoder_n_layers, hidden_size))
+                                 '{}-{}_{}'.format(encoder_n_layers, decoder_n_layers, hidden_size))
         print("try to save model to: ", directory)
     except:
         print("may will save model unsuccessfully")
@@ -212,5 +212,3 @@ def evaluateInput(encoder, decoder, searcher, voc):
 
         except KeyError:
             print("Error: Encountered unknown word.")
-
-

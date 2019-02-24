@@ -4,7 +4,6 @@ import torch.nn.functional as F
 from values import device
 
 
-
 class EncoderRNN(nn.Module):
     def __init__(self, hidden_size, embedding, n_layers=1, dropout=0):
         super(EncoderRNN, self).__init__()
