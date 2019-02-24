@@ -1,10 +1,8 @@
-import voc
-from values import MAX_LENGTH, device, SOS_token, Teacher_Forcing_Ratio
-from model import maskNLLLoss, EncoderRNN, LuongAttnDecoderRNN
+from values import MAX_LENGTH, device, SOS_token, Teacher_Forcing_Ratio, Hidden_Size
+from model import maskNLLLoss
 from data_preprocess import batch2TrainData, indexesFromSentence, normalizeString
 import torch
 import torch.nn as nn
-from torch import optim
 import random
 import os
 
@@ -92,6 +90,13 @@ def trainIters(model_name, voc, pairs, encoder, decoder,
     training_batches = [batch2TrainData(voc, [random.choice(pairs) for _ in range(batch_size)])
                         for _ in range(n_iteration)]
 
+    try:
+        directory = os.path.join(save_dir, model_name, corpus_name,
+                                     '{}-{}_{}'.format(encoder_n_layers, decoder_n_layers, hidden_size))
+        print("try to save model to: ", directory)
+    except:
+        print("may will save model unsuccessfully")
+
     # Initializations
     print('Initializing ...')
     start_iteration = 1
@@ -122,6 +127,7 @@ def trainIters(model_name, voc, pairs, encoder, decoder,
             print_loss = 0
 
         # Save checkpoint
+        hidden_size = Hidden_Size
         if (iteration % save_every == 0):
             directory = os.path.join(save_dir, model_name, corpus_name,
                                      '{}-{}_{}'.format(encoder_n_layers, decoder_n_layers, hidden_size))
@@ -202,7 +208,7 @@ def evaluateInput(encoder, decoder, searcher, voc):
             output_words = evaluate(encoder, decoder, searcher, voc, input_sentence)
             # Format and print response sentence
             output_words[:] = [x for x in output_words if not (x == 'EOS' or x == 'PAD')]
-            print('Bot:', ' '.join(output_words))
+            print('Bot:', ''.join(output_words))
 
         except KeyError:
             print("Error: Encountered unknown word.")

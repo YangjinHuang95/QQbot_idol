@@ -1,6 +1,6 @@
 # Chatbot_cn_pytorch
 
-## Not finished yet
+## Naïve finished
 
 ### this is a personal toy project used for learning pytorch
 

@@ -8,21 +8,9 @@ EOS_token = 2  # End-of-sentence token
 
 device = torch.device("cpu")
 
-# Configure models
-model_name = 'cb_model'
-attn_model = 'dot'
-#attn_model = 'general'
-#attn_model = 'concat'
-hidden_size = 500
-encoder_n_layers = 2
-decoder_n_layers = 2
-dropout = 0.1
-batch_size = 64
-
-clip = 50.0
+Hidden_Size = 500  # Hidden cell number, here means the model contain 500 cell
+Encoder_n_layers = 2
+Decoder_n_layers = 2
+Dropout_rate = 0.1
+Batch_size = 64
 Teacher_Forcing_Ratio = 1.0
-learning_rate = 0.0001
-decoder_learning_ratio = 5.0
-n_iteration = 4000
-print_every = 100
-save_every = 500

@@ -7,7 +7,7 @@ import jieba
 import unicodedata
 from voc import Voc
 from values import MAX_LENGTH, MIN_COUNT, \
-    PAD_token, SOS_token, EOS_token
+    PAD_token, EOS_token
 
 jieba.load_userdict("extra_dict.txt")
 
@@ -46,7 +46,7 @@ def unicodeToAscii(s):
 # Lowercase, trim, and remove non-letter characters
 def normalizeString(s):
     s = unicodeToAscii(s.lower().strip())
-    s = re.sub(r"(*[.!?])", r" \1", s)
+    s = re.sub(r"([.!?])", r" \1", s)
     s = re.sub(r"\s+", r" ", s).strip()
     return s
 
