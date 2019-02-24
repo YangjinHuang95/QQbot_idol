@@ -1,4 +1,5 @@
-from data_preprocess import loadPrepareData, trimRareWords,printsample, batch2TrainData
+from data_preprocess import loadPrepareData, trimRareWords,\
+    printsample, batch2TrainData,indexesFromSentence
 import random
 import jieba
 
@@ -30,3 +31,16 @@ if __name__=="__main__":
     print("target_variable:", target_variable)
     print("mask:", mask)
     print("max_target_len:", max_target_len)
+
+    inp = []
+    out = []
+    for pair in pairs[:10]:
+        inp.append(pair[0])
+        out.append(pair[1])
+    print(inp)
+    print(len(inp))
+    wordsplit = [list(jieba.cut(sentence,cut_all=False)) for sentence in inp]
+    indexes = [indexesFromSentence(voc,sentence) for sentence in inp]
+    print(wordsplit)
+    print(indexes)
+

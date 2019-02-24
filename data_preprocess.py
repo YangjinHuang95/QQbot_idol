@@ -6,14 +6,13 @@ import itertools
 import jieba
 import unicodedata
 from voc import Voc
-from values import MAX_LENGTH, MIN_COUNT
+from values import MAX_LENGTH, MIN_COUNT, \
+    PAD_token, SOS_token, EOS_token
+
+jieba.load_userdict("extra_dict.txt")
 
 
-PAD_token = 0  # Used for padding short sentences
-SOS_token = 1  # Start-of-sentence token
-EOS_token = 2  # End-of-sentence token
-
-
+# jieba basic usage example
 # seg_list = jieba.cut("我来到北京清华大学", cut_all=False)
 
 def printsample(qa_pairs):
@@ -47,7 +46,7 @@ def unicodeToAscii(s):
 # Lowercase, trim, and remove non-letter characters
 def normalizeString(s):
     s = unicodeToAscii(s.lower().strip())
-    s = re.sub(r"([.!?])", r" \1", s)
+    s = re.sub(r"(*[.!?])", r" \1", s)
     s = re.sub(r"\s+", r" ", s).strip()
     return s
 
@@ -131,7 +130,7 @@ def trimRareWords(voc, pairs, min_count=MIN_COUNT):
 
 
 def indexesFromSentence(voc, sentence):
-    return [voc.word2index[word] for word in jieba.cut(sentence,cut_all=False)] + [EOS_token]
+    return [voc.word2index[word] for word in jieba.cut(sentence, cut_all=False)] + [EOS_token]
 
 
 def zeroPadding(l, fillvalue=PAD_token):
@@ -172,7 +171,7 @@ def outputVar(l, voc):
 
 # Returns all items for a given batch of pairs
 def batch2TrainData(voc, pair_batch):
-    pair_batch.sort(key=lambda x: len(x[0].split(" ")), reverse=True)
+    pair_batch.sort(key=lambda x: len(list(jieba.cut(x[0], cut_all=False))), reverse=True)
     input_batch, output_batch = [], []
     for pair in pair_batch:
         input_batch.append(pair[0])

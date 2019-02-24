@@ -13,4 +13,6 @@ a chinese language chatbot  based on LSTM model, with using "jieba" library
 
 ### how to use
 
-run the main.py
+read the main.py first
+
+then run the main.py
